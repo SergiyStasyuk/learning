@@ -1,0 +1,7 @@
+{% extends 'admin/adminbase.html.twig' %}
+{% block body %}
+    <a href="{{ path('app_logout') }}">Вихід</a>
+    <h1>{{ title }}</h1>
+
+    <a href="{{ path('admin_user') }}">Користувачі</a>
+{% endblock %}

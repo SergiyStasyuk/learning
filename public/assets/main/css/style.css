@@ -1,0 +1,8 @@
+.form-login {
+    width: 80%;
+    padding: 30px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    margin: 30% auto;
+}

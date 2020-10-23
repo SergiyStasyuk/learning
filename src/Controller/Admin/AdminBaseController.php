@@ -10,6 +10,6 @@ class AdminBaseController extends AbstractController
 {
     public function renderDefault()
     {
-        return ['title' => 'Default Meaning for AdminPage'];
+        return ['title' => 'Адмін Панель'];
     }
 }

@@ -1,0 +1,60 @@
+{% extends 'admin/adminbase.html.twig' %}
+{% block body %}
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-12">
+                <h1 class="display-4 text-center mt-5">{{ title }}</h1>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row no-gutters">
+            {% if category is not empty %}
+                <div class="col-12 mt-5">
+                    <a href="{{ path('admin_post_create') }}" class="btn btn-success">Створити пост</a>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row no-gutters justify-content-center mt-3">
+            <div class="col-8">
+                {% for message in app.flashes('success') %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ message }}
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row no-gutters">
+            <div class="col-12 mt-5">
+                {% if category is empty %}
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <p>Створення постів неможливе, спочатку створіть категорію.</p>
+                    </div>
+                    <a class="btn btn-primary" href="{{ path('admin_category_create') }}">Створити категорію</a>
+                {% else %}
+                    <h2>Список постів:</h2>
+                    <ul>
+                        {% for post_item in post %}
+                            <li>
+                                {{ post_item.title }}
+                                <a href="{{ path('admin_post_update', {'id' : post_item.id}) }}" class="btn-link">
+                                    Редагувати
+                                </a>
+                            </li>
+                        {% endfor %}
+                    </ul>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

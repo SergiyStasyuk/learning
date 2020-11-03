@@ -24,18 +24,18 @@ class PostType extends AbstractType
                 'mapped' => false
             ))
             ->add('category', EntityType::class, array(
-                'label' => 'Категорії',
+                'label' => 'Категорія',
                 'class' => Category::class,
                 'choice_label' => 'title'
             ))
             ->add('title', TextType::class, array(
-                'label' => 'Заголовок категорії',
+                'label' => 'Заголовок поста',
                 'attr' => [
                     'placeholder' => 'Введіть текст'
                 ]
             ))
             ->add('content', TextareaType::class, array(
-                'label' => 'Опис категорії',
+                'label' => 'Опис поста',
                 'attr' => [
                     'placeholder' => 'Введіть опис'
                 ]

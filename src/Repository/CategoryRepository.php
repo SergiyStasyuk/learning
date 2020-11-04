@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Category;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -12,39 +13,46 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method Category[]    findAll()
  * @method Category[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class CategoryRepository extends ServiceEntityRepository
+class CategoryRepository extends ServiceEntityRepository implements CategoryRepositoryInterface
 {
-    public function __construct(ManagerRegistry $registry)
+    private $manager;
+
+    public function __construct(ManagerRegistry $registry,EntityManagerInterface $manager)
     {
+        $this->manager = $manager;
         parent::__construct($registry, Category::class);
     }
 
-    // /**
-    //  * @return Category[] Returns an array of Category objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    public function getAllCategory(): array
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
+        return parent::findAll();
     }
-    */
 
-    /*
-    public function findOneBySomeField($value): ?Category
+    public function getOneCategory(int $categoryId): object
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return parent::find($categoryId);
     }
-    */
+
+    public function setCreateCategory(Category $category): object
+    {
+        $category->setCreateAtValue();
+        $category->setUpdateAtValue();
+        $category->setIsPublished();
+        $this->manager->persist($category);
+        $this->manager->flush();
+        return $category;
+    }
+
+    public function setUpdateCategory(Category $category): object
+    {
+        $category->setUpdateAtValue();
+        $this->manager->flush();
+        return $category;
+    }
+
+    public function setDeleteCategory(Category $category)
+    {
+        $this->manager->remove($category);
+        $this->manager->flush();
+    }
 }
